@@ -1,7 +1,9 @@
 package application;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import controller.ProdutoController;
 import model.Celular;
 import model.Tablet;
 
@@ -11,19 +13,15 @@ public class Menu {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		int opcao;
+		ProdutoController produtos = new ProdutoController();
 		
-		Celular celular = new Celular("iPhone 15", 1000, 123, 3);
-		celular.visualizar();
-		
-		System.out.println();
-		Tablet tablet = new Tablet("Samsuns S6 Lite", 2000, 145, 2);
-		tablet.visualizar();
-		
+		int opcao, codigo, tipoCapacidade, tipoProduto;
+		String nome, camera, caneta;
+		float valor;	
 		
 		do {
 			
-			System.out.println("*****************************************************");
+			System.out.println("\n*****************************************************");
 			System.out.println("                                                     ");
 			System.out.println("                  LOJAS TECH BRASIL                  ");
 			System.out.println("                                                     ");
@@ -37,36 +35,126 @@ public class Menu {
 			System.out.println("          0 - Sair                                   ");
 			System.out.println("                                                     ");
 			System.out.println("*****************************************************");
-			System.out.println("Entre com a opção desejada:                          ");
-			System.out.println("                                                     ");
-			
-			opcao = sc.nextInt();
+			System.out.print("Entre com a opção desejada: ");
+						
+			try {
+				opcao = sc.nextInt();
+			} catch (InputMismatchException e) {
+				System.out.println("\nDigite valores inteiros!");
+				sc.nextLine();
+				opcao = -1;
+			}
 			
 			switch (opcao) {
 			
 			case 1:
-				System.out.println("\nCriar produto: \n");
+				System.out.println("\nCriar produto: ");
+				
+				System.out.print("\nNome do produto: ");
+				sc.skip("\\R?");
+				nome = sc.nextLine();
+				
+				System.out.print("Valor do produto: ");
+				valor = sc.nextFloat();
+				
+				System.out.print("Código do produto: ");
+				codigo = sc.nextInt();
+				
+				do {
+					System.out.print("Capacidade do produto ([1] 64GB | [2] 128GB | [3] 256GB): ");
+					tipoCapacidade = sc.nextInt();
+				} while(tipoCapacidade < 1 && tipoCapacidade > 3);
+				
+				System.out.print("Tipo do produto ([1] Celular | [2] Tablet): ");
+				tipoProduto = sc.nextInt();
+				
+				switch (tipoProduto) {
+				case 1: 
+					System.out.print("Qualidade da câmera: ");
+					camera = sc.next();
+					produtos.criarProduto(new Celular(nome, valor, codigo, tipoCapacidade, camera));
+					break;
+				case 2:
+					System.out.print("Suporte a caneta: ");
+					caneta = sc.next();
+					produtos.criarProduto(new Tablet(nome, valor, codigo, tipoCapacidade, caneta));
+					break;
+				}
+				
 				break;
 				
 			case 2:
 				System.out.println("\nListar todos os produtos: \n");
+				produtos.listarProdutos();
 				break;
 				
 			case 3:
 				System.out.println("\nBuscar produto por código: \n");
+				
+				System.out.print("Digite o código do produto: ");
+				codigo = sc.nextInt();
+				
+				produtos.procurarProduto(codigo);
+				
 				break;
 			
 			case 4:
 				System.out.println("\nAtualizar dados do produto: \n");
+				
+				System.out.print("Digite o código do produto: ");
+				codigo = sc.nextInt();
+				
+				var buscaProduto = produtos.acharNaLista(codigo);
+				
+				if (buscaProduto != null) {
+					tipoProduto = buscaProduto.getCodigoProduto();
+					
+					System.out.print("\nNome do produto: ");
+					sc.skip("\\R?");
+					nome = sc.nextLine();
+					
+					System.out.print("Valor do produto: ");
+					valor = sc.nextFloat();
+					
+					do {
+						System.out.print("Capacidade do produto ([1] 64GB | [2] 128GB | [3] 256GB): ");
+						tipoCapacidade = sc.nextInt();
+					} while(tipoCapacidade < 1 && tipoCapacidade > 3);
+					
+					System.out.print("Tipo do produto ([1] Celular | [2] Tablet): ");
+					tipoProduto = sc.nextInt();
+					
+					switch (tipoProduto) {
+					case 1: 
+						System.out.print("Qualidade da câmera: ");
+						camera = sc.next();
+						produtos.atualizarProduto(new Celular(nome, valor, codigo, tipoCapacidade, camera));
+						break;
+					case 2: 
+						System.out.print("Suporte a caneta: ");
+						caneta = sc.next();
+						produtos.atualizarProduto(new Tablet(nome, valor, codigo, tipoCapacidade, caneta));
+					}
+					
+				}
+				else {
+					System.out.println("\nProduto não encontrado!");
+				}
+				
 				break;
 				
 			case 5:
 				System.out.println("\nApagar produto: \n");
+				System.out.print("Digite o código do produto: ");
+				codigo = sc.nextInt();
+				
+				produtos.deletarProduto(codigo);
+				
 				break;	
 				
 			default:
 				if (opcao != 0 && opcao  > 5)
-					System.out.println("Opção inválida!");
+					System.out.println("Opção inválida!\n");
 				break;
 			
 			}
