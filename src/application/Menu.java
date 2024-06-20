@@ -31,34 +31,38 @@ public class Menu {
 			
 			opcao = sc.nextInt();
 			
+			switch (opcao) {
+			
+			case 1:
+				System.out.println("\nCriar produto: \n");
+				break;
+				
+			case 2:
+				System.out.println("\nListar todos os produtos: \n");
+				break;
+				
+			case 3:
+				System.out.println("\nBuscar produto por código: \n");
+				break;
+			
+			case 4:
+				System.out.println("\nAtualizar dados do produto: \n");
+				break;
+				
+			case 5:
+				System.out.println("\nApagar produto: \n");
+				break;	
+				
+			default:
+				if (opcao != 0 && opcao  > 5)
+					System.out.println("Opção inválida!");
+				break;
+			
+			}
+			
 		} while (opcao != 0);
 		
-		switch (opcao) {
-		
-		case 1:
-			System.out.println("\nCriar produto: ");
-			break;
-			
-		case 2:
-			System.out.println("\nListar todos os produtos: ");
-			break;
-			
-		case 3:
-			System.out.println("\nBuscar produto por código: ");
-			break;
-		
-		case 4:
-			System.out.println("\nAtualizar dados do produto: ");
-			break;
-			
-		case 5:
-			System.out.println("\nApagar produto: ");
-			break;	
-			
-		default:
-			System.out.println("Opção inválida!");
-		
-		}
+		System.out.println("\nFim da execução");
 		
 		sc.close();
 
