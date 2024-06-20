@@ -2,6 +2,9 @@ package application;
 
 import java.util.Scanner;
 
+import model.Celular;
+import model.Tablet;
+
 public class Menu {
 
 	public static void main(String[] args) {
@@ -9,6 +12,14 @@ public class Menu {
 		Scanner sc = new Scanner(System.in);
 		
 		int opcao;
+		
+		Celular celular = new Celular("iPhone 15", 1000, 123, 3);
+		celular.visualizar();
+		
+		System.out.println();
+		Tablet tablet = new Tablet("Samsuns S6 Lite", 2000, 145, 2);
+		tablet.visualizar();
+		
 		
 		do {
 			
