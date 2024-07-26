@@ -2,10 +2,21 @@ package model;
 
 public class Tablet extends Produto {
 
-	public Tablet(String nomeProduto, float valorProduto, int codigoProduto, int capacidade) {
+	private String caneta;
+	
+	public Tablet(String nomeProduto, float valorProduto, int codigoProduto, int capacidade, String caneta) {
 		super(nomeProduto, valorProduto, codigoProduto, capacidade);
+		this.caneta = caneta;
 	}
 	
+	public String getCaneta() {
+		return caneta;
+	}
+
+	public void setCaneta(String caneta) {
+		this.caneta = caneta;
+	}
+
 	@Override
 	public float valorReal(int capacidade) {
 		
@@ -32,6 +43,7 @@ public class Tablet extends Produto {
 	public void visualizar() {
 		super.visualizar();
 		System.out.println("Valor do produto: R$" + String.format("%.2f", valorReal(getCapacidade())));
+		System.out.println("Suporte à caneta interativa: " + getCaneta());
 	}
 	
 }

@@ -84,7 +84,7 @@ public abstract class Produto {
 	
 	public void visualizar() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Nome do produto: " + getNomeProduto());
+		sb.append("\nNome do produto: " + getNomeProduto());
 		sb.append("\nCódigo do produto: " + getCodigoProduto());
 		sb.append("\nCapacidade do produto: " + tipoCapacidade(capacidade));
 		System.out.println(sb.toString());
